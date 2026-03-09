@@ -70,8 +70,8 @@ while True:
                 y = int(landmark.y * h)
                 points.append((x, y))
 
-                # Draw joint
-                #cv2.circle(frame, (x, y), 5, (0,255,0), -1)
+                #Draw joint
+                cv2.circle(frame, (x, y), 5, (0,255,0), -1)
 
             # Draw bones
             for connection in POSE_CONNECTIONS:
