@@ -18,7 +18,9 @@ optionsHand = vision.HandLandmarkerOptions(
     min_hand_presence_confidence=0.6,
     min_tracking_confidence=0.6
 )
-
+optionsPose = vision.PoseLandmarkerOptions(
+    
+)
 detectorHand = vision.HandLandmarker.create_from_options(options)
 running_mode=vision.RunningMode.VIDEO
 # Webcam
