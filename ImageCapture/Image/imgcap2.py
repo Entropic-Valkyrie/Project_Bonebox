@@ -10,31 +10,44 @@ base_options = python.BaseOptions(
     model_asset_path=r"C:\pose_landmarker_heavy.task"
 )
 
+latest_landmarks = None
+
+def result_callback(result, image, timestamp_ms):
+    global latest_landmarks
+    try:
+        latest_landmarks = result
+    except Exception as e:
+        print("Callback error:", e)
+
 options = vision.PoseLandmarkerOptions(
     base_options=base_options,
-    running_mode=vision.RunningMode.VIDEO
+    running_mode=vision.RunningMode.LIVE_STREAM,
+    result_callback=result_callback
 )
 
 detector = vision.PoseLandmarker.create_from_options(options)
 
 # Webcam
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 if not cap.isOpened():
     print("Error: Could not open camera.")
     exit()
 
 prev_time = 0
+timestamp = 0 # stable monotonic timestamp
 
 # Skeleton connections (MediaPipe 33 landmark model)
 POSE_CONNECTIONS = [
-    (11,13),(13,15),      # left arm
-    (12,14),(14,16),      # right arm
-    (11,12),              # shoulders
-    (11,23),(12,24),      # torso
-    (23,24),              # hips
-    (23,25),(25,27),(27,29),(29,31),  # left leg
-    (24,26),(26,28),(28,30),(30,32)   # right leg
+    (11,13),(13,15),
+    (12,14),(14,16),
+    (11,12),
+    (11,23),(12,24),
+    (23,24),
+    (23,25),(25,27),(27,29),(29,31),
+    (24,26),(26,28),(28,30),(30,32)
 ]
 
 while True:
@@ -44,7 +57,6 @@ while True:
         break
 
     frame = cv2.flip(frame, 1)
-
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     mp_image = mp.Image(
@@ -52,33 +64,32 @@ while True:
         data=rgb_frame
     )
 
-    timestamp = int(time.time() * 1000)
-
-    results = detector.detect_for_video(mp_image, timestamp)
+    #Increment timestamp (CRUCIAL for LIVE_STREAM)
+    timestamp += 1
+    detector.detect_async(mp_image, timestamp)
 
     h, w, _ = frame.shape
 
-    if results.pose_landmarks:
+    # Use callback result, NOT detect_async return
+    if latest_landmarks is not None and latest_landmarks.pose_landmarks:
 
-        for pose_landmarks in results.pose_landmarks:
+        for pose_landmarks in latest_landmarks.pose_landmarks:
 
             points = []
 
-            # Convert normalized coordinates → pixels
             for landmark in pose_landmarks:
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
                 points.append((x, y))
 
-                #Draw joint
+                # Draw joints
                 cv2.circle(frame, (x, y), 5, (0,255,0), -1)
 
             # Draw bones
             for connection in POSE_CONNECTIONS:
                 start = points[connection[0]]
                 end = points[connection[1]]
-
-                cv2.line(frame,start, end, (255,0,0), 2)
+                cv2.line(frame, start, end, (255,0,0), 2)
 
     # FPS calculation
     current_time = time.time()

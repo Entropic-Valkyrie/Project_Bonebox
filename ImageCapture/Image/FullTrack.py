@@ -15,9 +15,26 @@ base_options_pose = python.BaseOptions(
 
 )
 
+latest_hand_landmarks = None
+latest_pose_landmarks = None
+
+def result_callback_hand(resultshand, image, timestamp_ms):
+    global latest_hand_landmarks
+    try:
+        latest_hand_landmarks = resultshand
+    except Exception as e:
+        print("Callback error:", e)
+def result_callback_pose(resultspose, image, timestamp_ms):
+    global latest_pose_landmarks
+    try:
+        latest_pose_landmarks = resultspose
+    except Exception as e:
+        print("Callback error:", e)
+
 optionsHand = vision.HandLandmarkerOptions(
     base_options=base_options_hand,
-    running_mode=vision.RunningMode.VIDEO,
+    running_mode=vision.RunningMode.LIVE_STREAM,
+    result_callback = result_callback_hand,
     num_hands=2,
     min_hand_detection_confidence=0.6,
     min_hand_presence_confidence=0.6,
@@ -25,7 +42,8 @@ optionsHand = vision.HandLandmarkerOptions(
 )
 optionsPose = vision.PoseLandmarkerOptions(
     base_options=base_options_pose,
-    running_mode=vision.RunningMode.VIDEO,
+    running_mode=vision.RunningMode.LIVE_STREAM,
+    result_callback = result_callback_pose,
     min_pose_detection_confidence=0.6,
     min_pose_presence_confidence=0.6,
     min_tracking_confidence=0.6
@@ -77,13 +95,13 @@ while True:
     )
     timestamp = int(time.time() * 1000)
 
-    resultshand = detectorHand.detect_for_video(mp_image, timestamp)
+    detectorHand.detect_async(mp_image, timestamp)
 
     h, w, _ = frame.shape
 
-    if resultshand.hand_landmarks:
+    if latest_hand_landmarks is not None and latest_hand_landmarks.hand_landmarks:
 
-        for hand_landmarks in resultshand.hand_landmarks:
+        for hand_landmarks in latest_hand_landmarks.hand_landmarks:
 
             points = []
 
@@ -102,10 +120,10 @@ while True:
                 end = points[connection[1]]
 
                 cv2.line(frame,start, end, (0,255,0), 2)
-    resultspose = detectorPose.detect_for_video(mp_image, timestamp)
-    if resultspose.pose_landmarks:
+    detectorPose.detect_async(mp_image, timestamp)
+    if latest_pose_landmarks is not None and latest_pose_landmarks.pose_landmarks:
 
-        for pose_landmarks in resultspose.pose_landmarks:
+        for pose_landmarks in latest_pose_landmarks.pose_landmarks:
 
             points = []
 
