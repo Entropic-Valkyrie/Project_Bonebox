@@ -1,5 +1,6 @@
 using System;
 using System.IO.MemoryMappedFiles;
+using System.Xml;
 
 class Program
 {
@@ -21,17 +22,19 @@ class Program
                 float x = accessor.ReadSingle(0); // first float
                 float y = accessor.ReadSingle(4); // second float
                 float z = accessor.ReadSingle(8); // third float
+                int currentnode = accessor.ReadSingle(12);
                 if (Calcheck != 10) {Calcheck += 1; XSum += x; YSum += y; ZSum += z;}
                 //Console.WriteLine($"C# read: {x:F1}, {y:F1}, {z:F1}");
                 float originX = (XSum/10);
                 float originY = (YSum/10);
                 float originZ = (ZSum/10);
                 System.Threading.Thread.Sleep(16);
+                
 
                 float VectorX = VChange(originX, x);
                 float VectorY = VChange(originY, y);
                 float VectorZ = VChange(originZ, z);
-                Console.WriteLine($"C# read: {VectorX:F1}, {VectorY:F1}, {VectorZ:F1}");
+                Console.WriteLine($"C# read: {VectorX:F1}, {VectorY:F1}, {VectorZ:F1}, {currentnode:F1}");
             }
             
         }

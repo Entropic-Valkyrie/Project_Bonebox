@@ -16,10 +16,10 @@ base_options_pose = python.BaseOptions(
     model_asset_path=r"C:\pose_landmarker_heavy.task"
 
 )
-
+node = int(0)
 latest_hand_landmarks = None
 latest_pose_landmarks = None
-shm = shared_memory.SharedMemory(name="pose_basic", create=True, size=12)
+shm = shared_memory.SharedMemory(name="pose_basic", create=True, size=16)
 
 def result_callback_hand(resultshand, image, timestamp_ms):
     global latest_hand_landmarks
@@ -129,15 +129,15 @@ while True:
         for pose_landmarks in latest_pose_landmarks.pose_landmarks:
 
             points = []
-
+            node = int(0)
             # Convert normalized coordinates → pixels
             for landmark in pose_landmarks:
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
-                
+                node += 1
                 points.append((x, y))
                         # pack 3 floats into bytes
-                shm.buf[:12] = struct.pack('fff', float(landmark.x), float(landmark.y), float(landmark.z))
+                shm.buf[:16] = struct.pack('fffi', float(landmark.x), float(landmark.y), float(landmark.z), int(node))
 
                 #print(f"Python wrote: {x:.1f}, {y:.1f}, {z:.1f}")
 
