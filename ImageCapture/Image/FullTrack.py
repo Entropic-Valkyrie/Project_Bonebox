@@ -1,6 +1,8 @@
 import cv2
 import mediapipe as mp
 import time
+from multiprocessing import shared_memory
+import struct
 
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
@@ -17,6 +19,7 @@ base_options_pose = python.BaseOptions(
 
 latest_hand_landmarks = None
 latest_pose_landmarks = None
+shm = shared_memory.SharedMemory(name="pose_basic", create=True, size=12)
 
 def result_callback_hand(resultshand, image, timestamp_ms):
     global latest_hand_landmarks
@@ -131,7 +134,12 @@ while True:
             for landmark in pose_landmarks:
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
+                
                 points.append((x, y))
+                        # pack 3 floats into bytes
+                shm.buf[:12] = struct.pack('fff', float(landmark.x), float(landmark.y), float(landmark.z))
+
+                #print(f"Python wrote: {x:.1f}, {y:.1f}, {z:.1f}")
 
                 #Draw joint
                 cv2.circle(frame, (x, y), 5, (0,255,0), -1)
