@@ -134,7 +134,7 @@ while True:
             for landmark in pose_landmarks:
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
-                node += 1
+                node += 3
                 points.append((x, y))
                         # pack 3 floats into bytes
                 shm.buf[:16] = struct.pack('fffi', float(landmark.x), float(landmark.y), float(landmark.z), int(node))
