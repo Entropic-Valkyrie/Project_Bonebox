@@ -108,7 +108,7 @@ while True:
 
             points = []
 
-            # Convert normalized coordinates → pixels
+            # Convert normalized coordinates into pixels
             for landmark in hand_landmarks:
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
@@ -130,7 +130,7 @@ while True:
 
             points = []
             node = int(0)
-            # Convert normalized coordinates → pixels
+            # Convert normalized coordinates into pixels
             for landmark in pose_landmarks:
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
@@ -154,6 +154,7 @@ while True:
     current_time = time.time()
     fps = 1 / (current_time - prev_time) if prev_time != 0 else 0
     prev_time = current_time
+
 
     cv2.putText(
         frame,

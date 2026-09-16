@@ -2,7 +2,13 @@ using System;
 using System.ComponentModel;
 using System.IO.MemoryMappedFiles;
 using System.Xml;
-
+class BoneNode
+{
+    object Node
+    {
+        
+    }
+}
 class Program
 {
     static void Main()
