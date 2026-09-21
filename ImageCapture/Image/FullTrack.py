@@ -73,6 +73,7 @@ HAND_CONNECTIONS = [
     (17,18),(18,19),(19,20)             # left leg
 ]
 POSE_CONNECTIONS = [
+    (0,1),(0,4),(1,2),(2,3),(3,7),(4,5),(5,6),(6,8),(10,9), # Face
     (11,13),(13,15),                    # left arm
     (12,14),(14,16),                    # right arm
     (11,12),                            # shoulders
@@ -115,7 +116,7 @@ while True:
                 points.append((x, y))
 
                 #Draw joint
-                cv2.circle(frame, (x, y), 5, (0,255,0), -1)
+                cv2.circle(frame, (x, y), 5, (255,0,0), -1)
 
             # Draw bones
             for connection in HAND_CONNECTIONS:
@@ -142,7 +143,7 @@ while True:
                 #print(f"Python wrote: {x:.1f}, {y:.1f}, {z:.1f}")
 
                 #Draw joint
-                cv2.circle(frame, (x, y), 5, (0,255,0), -1)
+                cv2.circle(frame, (x, y), 5, (0,0,255), -1)
 
             # Draw bones
             for connection in POSE_CONNECTIONS:
