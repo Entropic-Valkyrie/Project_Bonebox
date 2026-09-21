@@ -2,17 +2,48 @@ using System;
 using System.ComponentModel;
 using System.IO.MemoryMappedFiles;
 using System.Xml;
-class BoneNode
+class BoneNode()
 {
-    object Node
-    {
-        
-    }
-}
+        private float[] _coordinate;
+        private float[] _pastCoordinate;
+        public static float[] Coordinate
+        {
+            get
+                {
+                return  _coordinate;
+                }
+            set
+                {
+                _pastCoordinate = Coordinate;
+                _coordinate = value;
+                }
+        }
+        public float[] PastCoordinate
+        {
+            get
+                {
+                return _pastCoordinate;
+                }
+        }
+        public int NodeVal {get;}
+
+        public BoneNode(int nodeVal, float[] coordinate)
+        {
+            NodeVal = nodeVal;
+            _coordinate = coordinate;
+            _pastCoordinate = coordinate;
+        }
+
+}    
+
 class Program
 {
     static void Main()
-    {
+
+   {
+
+        
+
         using (var mmf = MemoryMappedFile.OpenExisting("pose_basic"))
         using (var accessor = mmf.CreateViewAccessor())
         {
@@ -43,4 +74,3 @@ class Program
         }
         
     }
-}
