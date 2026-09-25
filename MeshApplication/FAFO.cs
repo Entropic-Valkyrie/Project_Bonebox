@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.IO.MemoryMappedFiles;
 using System.Xml;
-class BoneNode()
+class BoneNode
 {
         private float[] _coordinate;
         private float[] _pastCoordinate;
@@ -27,16 +27,19 @@ class BoneNode()
         }
         public int NodeVal {get;}
 
-        public BoneNode(int nodeVal, float[] coordinate)
+    public BoneNode(
+        int nodeVal,
+        float[] coordinate
+        )
         {
-            NodeVal = nodeVal;
-            _coordinate = coordinate;
-            _pastCoordinate = coordinate;
+            this.NodeVal = nodeVal;
+            this._coordinate = coordinate;
+            this. _pastCoordinate = coordinate;
         }
 
 }    
 
-class Program
+class NodeMath
 {
     static void Main()
 
