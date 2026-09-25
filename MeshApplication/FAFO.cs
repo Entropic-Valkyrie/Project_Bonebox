@@ -6,7 +6,7 @@ class BoneNode()
 {
         private float[] _coordinate;
         private float[] _pastCoordinate;
-        public static float[] Coordinate
+        public  float[] Coordinate
         {
             get
                 {
