@@ -43,9 +43,9 @@ class NodeMath
 {
     static void Main()
 
-   {
+    {
 
-        
+
 
         using (var mmf = MemoryMappedFile.OpenExisting("pose_basic"))
         using (var accessor = mmf.CreateViewAccessor())
@@ -57,11 +57,12 @@ class NodeMath
             float ZSum = 0;
             float[] coords = new float(128);
             float[] CalCord = new float(128);
-            static float VChange (float a, float b)
+
+            static float VChange(float a, float b)
             {
-                    return Math.Abs((a + b));
+                return Math.Abs((a + b));
             }
-            }
+
             while (true)
 
             {
@@ -70,10 +71,10 @@ class NodeMath
                 float z = accessor.ReadSingle(8); // third float
                 int currentnode = accessor.ReadInt32(12);
 
-                System.Threading.Thread.Sleep(16);
-                
+                Thread.Sleep(16);
+
             }
-            
+
         }
-        
     }
+}
