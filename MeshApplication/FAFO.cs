@@ -2,6 +2,8 @@ using System;
 using System.ComponentModel;
 using System.IO.MemoryMappedFiles;
 using System.Xml;
+
+namespace MeshApplication;
 class BoneNode
 {
         private float[] _coordinate;
@@ -29,7 +31,7 @@ class BoneNode
 
     public BoneNode(
         int nodeVal,
-        float[] coordinate
+        float[] coordinate[0]
         )
         {
             this.NodeVal = nodeVal;
@@ -37,15 +39,23 @@ class BoneNode
             this. _pastCoordinate = coordinate;
         }
 
-}    
+}
 
-class NodeMath
+internal class Program
 {
-    static void Main()
+    private static void Main()
 
     {
+        int i = 0;
+        while (i <= 32)
+        {
 
+            new BoneNode(i , )
+            
+        } 
 
+        
+    
 
         using (var mmf = MemoryMappedFile.OpenExisting("pose_basic"))
         using (var accessor = mmf.CreateViewAccessor())
@@ -55,8 +65,8 @@ class NodeMath
             float XSum = 0;
             float YSum = 0;
             float ZSum = 0;
-            float[] coords = new float(128);
-            float[] CalCord = new float(128);
+            float[] coords = new float[128];
+            float[] CalCord = new float[128];
 
             static float VChange(float a, float b)
             {
