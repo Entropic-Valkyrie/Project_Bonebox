@@ -29,14 +29,13 @@ class BoneNode
         }
         public int NodeVal {get;}
 
-    public BoneNode(
-        int nodeVal,
-        float[] coordinate[0]
-        )
+        public BoneNode(
+            int nodeVal, 
+            float[] coordinate)
         {
-            this.NodeVal = nodeVal;
-            this._coordinate = coordinate;
-            this. _pastCoordinate = coordinate;
+            NodeVal = nodeVal;
+            _coordinate = coordinate;
+            _pastCoordinate = coordinate;
         }
 
 }
@@ -46,13 +45,12 @@ internal class Program
     private static void Main()
 
     {
-        int i = 0;
-        while (i <= 32)
+        BoneNode[] node = new BoneNode[32];
+        for (int i = 0; i < 32; i++)
         {
+            node[i] = new BoneNode(i, [0, 0, 0]);
 
-            new BoneNode(i , )
-            
-        } 
+        }
 
         
     
