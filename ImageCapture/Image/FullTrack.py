@@ -116,7 +116,7 @@ while True:
                 points.append((x, y))
 
                 #Draw joint
-                cv2.circle(frame, (x, y), 5, (255,0,0), -1)
+                cv2.circle(frame, (x, y), 10, (255,0,0), -1)
 
             # Draw bones
             for connection in HAND_CONNECTIONS:
@@ -172,5 +172,7 @@ while True:
     if cv2.waitKey(1) & 0xFF == 27:
         break
 
+shm.unlink
+shm.close
 cap.release()
 cv2.destroyAllWindows()
