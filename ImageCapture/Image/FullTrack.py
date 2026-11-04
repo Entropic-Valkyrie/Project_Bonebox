@@ -130,14 +130,14 @@ while True:
         for pose_landmarks in latest_pose_landmarks.pose_landmarks:
 
             points = []
-            node = int(0)
+            node = int(-3)
             # Convert normalized coordinates into pixels
             for landmark in pose_landmarks:
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
                 node += 3
                 points.append((x, y))
-                        # pack 3 floats into bytes
+                        # pack 3 floats + 1 int into bytes
                 shm.buf[:16] = struct.pack('fffi', float(landmark.x), float(landmark.y), float(landmark.z), int(node))
 
                 #print(f"Python wrote: {x:.1f}, {y:.1f}, {z:.1f}")
@@ -171,7 +171,7 @@ while True:
 
     if cv2.waitKey(1) & 0xFF == 27:
         break
-
+    
 shm.unlink
 shm.close
 cap.release()
