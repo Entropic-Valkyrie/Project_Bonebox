@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\MeshApplication.csproj": {}
+    "C:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\MeshApplication.csproj": {}
   },
   "projects": {
-    "c:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\MeshApplication.csproj": {
+    "C:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\MeshApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\MeshApplication.csproj",
+        "projectUniqueName": "C:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\MeshApplication.csproj",
         "projectName": "MeshApplication",
-        "projectPath": "c:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\MeshApplication.csproj",
+        "projectPath": "C:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\MeshApplication.csproj",
         "packagesPath": "C:\\Users\\jack\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\obj\\",
+        "outputPath": "C:\\Users\\jack\\BoneCode\\Project_Bonebox\\MeshApplication\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jack\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -32,7 +32,7 @@ shlfo = shared_memory.SharedMemory(name="pose_Lfoot", create=True, size=12)
 shrfo =  shared_memory.SharedMemory(name="pose_Rfoot", create=True, size=12)
 
 nodearray = [shh,shls,shrs,shle,shre,shlw,shrw,shlf,shrf,shlh,shrh,shlk,shrk,shla,shra,shlfo,shrfo]
-
+nodearrayval = [0,12,11,14,13,16,15,20,19,24,23,26,25,28,27,32,31]
 def result_callback_pose(resultspose, image, timestamp_ms):
     global latest_pose_landmarks
     try:
@@ -93,21 +93,29 @@ while True:
     if latest_pose_landmarks is not None and latest_pose_landmarks.pose_landmarks:
 
         for pose_landmarks in latest_pose_landmarks.pose_landmarks:
-
+           
             points = []
             p = 0
+            n = 0
             # Convert normalized coordinates into pixels
             for landmark in pose_landmarks:
                 if p == 16:    
                     p = 0
+                if n >= 31:
+                    n = 0
+                print(n)
+                print(latest_pose_landmarks.name)
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
                 node += 3
                 points.append((x, y))
-
+                pose_landmarks = latest_pose_landmarks.pose_landmarks[0] 
                         # pack 3 floats + 1 int into bytes
-                nodearray[p].buf[:12] = struct.pack('fff', float(landmark.x), float(landmark.y), float(landmark.z))
+                if pose_landmarks == nodearrayval[p]: 
+                    nodearray[p].buf[:12] = struct.pack('fff', float(landmark.x), float(landmark.y), float(landmark.z))
+                    print("Passed")
                 p +=1
+                n +=1
                 #print(f"Python wrote: {x:.1f}, {y:.1f}, {z:.1f}")
 
                 #Draw joint
