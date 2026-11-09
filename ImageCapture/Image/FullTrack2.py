@@ -98,24 +98,24 @@ while True:
             p = 0
             n = 0
             # Convert normalized coordinates into pixels
-            for landmark in pose_landmarks:
-                if p == 16:    
-                    p = 0
-                if n >= 31:
-                    n = 0
-                print(n)
-                print(latest_pose_landmarks.name)
+            for n, landmark in enumerate(pose_landmarks):
+
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
-                node += 3
+
                 points.append((x, y))
-                pose_landmarks = latest_pose_landmarks.pose_landmarks[0] 
-                        # pack 3 floats + 1 int into bytes
-                if pose_landmarks == nodearrayval[p]: 
-                    nodearray[p].buf[:12] = struct.pack('fff', float(landmark.x), float(landmark.y), float(landmark.z))
-                    print("Passed")
-                p +=1
-                n +=1
+
+                if n in nodearrayval:
+                    p = nodearrayval.index(n)
+
+                    nodearray[p].buf[:12] = struct.pack(
+                        'fff',
+                        float(landmark.x),
+                        float(landmark.y),
+                        float(landmark.z)
+                    )
+
+                    print(f"Updated {p}: landmark {n}")
                 #print(f"Python wrote: {x:.1f}, {y:.1f}, {z:.1f}")
 
                 #Draw joint

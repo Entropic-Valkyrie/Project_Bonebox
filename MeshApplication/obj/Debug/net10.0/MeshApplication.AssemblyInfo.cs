@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MeshApplication")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d15157e238c8983a9f630a0be6f8226d0557ad10")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ff26c698fd81dc3462042cbb0013f84c87e9629")]
 [assembly: System.Reflection.AssemblyProductAttribute("MeshApplication")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MeshApplication")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
